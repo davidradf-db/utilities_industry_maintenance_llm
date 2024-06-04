@@ -61,16 +61,6 @@ job_config = {
             "job_cluster_key": "Job_cluster",
         },
         {
-            "task_key": "01-Streaming-Document-Ingestion",
-            "depends_on": [{"task_key": "01-Document-Ingestion-and-Index-Creation"}],
-            "run_if": "ALL_SUCCESS",
-            "notebook_task": {
-                "notebook_path": "01-Streaming-Data-Preparation",
-                "source": "GIT",
-            },
-            "job_cluster_key": "Job_cluster",
-        },
-        {
             "task_key": "02-Deploy-RAG-Chatbot-Model",
             "depends_on": [{"task_key": "01-Document-Ingestion-and-Index-Creation"}],
             "run_if": "ALL_SUCCESS",
@@ -91,20 +81,9 @@ job_config = {
             },
             "job_cluster_key": "Job_cluster",
         },
-        {
-            "task_key": "03-Deploy-Simple-chatbot",
-            "depends_on": [{"task_key": "02-Deploy-RAG-Chatbot-Model"}],
-            "run_if": "ALL_SUCCESS",
-            "notebook_task": {
-                "notebook_path": "03-No-RAG-Gradio-App",
-                "base_parameters": {"workspace_id": "{{workspace.id}}"},
-                "source": "GIT",
-            },
-            "job_cluster_key": "Job_cluster",
-        },
     ],
     "git_source": {
-        "git_url": "https://github.com/rohit-kg/dbrx-simple-llm-demo/",
+        "git_url": "https://github.com/davidradf-db/utilities_industry_maintenance_llm/",
         "git_provider": "gitHub",
         "git_branch": "main",
     },
@@ -126,13 +105,17 @@ new_job = CreateJob.from_dict(job_config)
 from databricks.sdk.service.jobs import Task, NotebookTask, Source, TaskDependency
 
 j = w.jobs.create(
-    name=f"({username}) mfg_llm_demo",
+    name=f"({username}) utilities_llm_demo",
     tasks=new_job.tasks,
     git_source=new_job.git_source,
     job_clusters=new_job.job_clusters,
     parameters=new_job.parameters,
     run_as=new_job.run_as,
 )
+
+# COMMAND ----------
+
+print(f'https://{spark.conf.get("spark.databricks.workspaceUrl")}/jobs/{j.job_id}')
 
 # COMMAND ----------
 

@@ -1,0 +1,442 @@
+{
+  "reports": [
+    {
+      "title": "Transmission Line Repair - Segment 12B",
+      "date": "June 2, 2024",
+      "report_by": "John Doe, Senior Lineman",
+      "location_id": "12B",
+      "location_type": "Transmission Tower",
+      "component_name": "Conductor and Insulators",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Severe wear and corrosion on the conductor and insulators at pole #34. The infrastructure is over 40 years old and shows significant degradation.",
+      "symptoms": "Visible rust and pitting on the conductor surface, cracked or broken insulators, and reduced mechanical integrity of the pole. Increased power losses and frequent tripping might also be observed.",
+      "actions_taken": "Removed the corroded conductor, installed new high-tension aluminum conductor, verified tension and secured connections. Removed old porcelain insulators, installed new composite insulators, checked alignment and integrity of the new insulators.",
+      "challenges": [
+        "The aged infrastructure required specialized tools and techniques for removal.",
+        "The new conductor required precise tensioning due to its higher tensile strength."
+      ],
+      "recommendations": [
+        "Regular inspections should be scheduled for all segments with similar-aged infrastructure.",
+        "Training sessions on handling older equipment and materials should be conducted."
+      ],
+      "additional_notes": "Documenting these procedures is crucial for future reference. Detailed steps and tools used have been recorded in the maintenance log."
+    },
+    {
+      "title": "Transformer Maintenance - Substation 5",
+      "date": "June 3, 2024",
+      "report_by": "Jane Smith, Senior Lineman",
+      "location_id": "5",
+      "location_type": "Substation",
+      "component_name": "Transformer Bushings",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Transformer bushings showed signs of oil leakage and cracking. The unit is an older model.",
+      "symptoms": "Oil stains around bushings, visible cracks or breaks, and possible reduction in insulation performance. The transformer may exhibit overheating or abnormal noises.",
+      "actions_taken": "Drained oil from the transformer, removed cracked bushings, installed new bushings compatible with the older transformer model, refilled and tested oil levels. Applied sealant to prevent future oil leakage, conducted dielectric tests to ensure insulation integrity.",
+      "challenges": [
+        "Locating compatible bushings for the older transformer model.",
+        "Ensuring proper oil handling and disposal as per environmental guidelines."
+      ],
+      "recommendations": [
+        "Inventory check for spare parts compatible with older transformer models.",
+        "Cross-training linemen on handling maintenance tasks for both new and old transformers."
+      ],
+      "additional_notes": "Detailed documentation of the maintenance process has been added to the substation log for future reference."
+    },
+    {
+      "title": "Circuit Breaker Replacement - Substation 3",
+      "date": "June 4, 2024",
+      "report_by": "Tom Brown, Senior Lineman",
+      "location_id": "3",
+      "location_type": "Substation",
+      "component_name": "Circuit Breaker",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "The circuit breaker at bay 2 failed during a routine test. The unit is an older model not commonly used.",
+      "symptoms": "Inability to reset the breaker, frequent tripping, and visible damage or wear on the breaker components. Electrical arcing and burnt smells may also be present.",
+      "actions_taken": "Isolated the faulty circuit breaker, removed the old unit, installed a new compatible circuit breaker, tested the new unit for proper operation.",
+      "challenges": [
+        "Difficulty finding a compatible replacement part.",
+        "Ensuring proper isolation and safety during replacement."
+      ],
+      "recommendations": [
+        "Stock adequate spare parts for older equipment.",
+        "Conduct refresher training on handling older circuit breaker models."
+      ],
+      "additional_notes": "Replacement process and testing procedures documented for future reference."
+    },
+    {
+      "title": "Pole Replacement - Line Segment 7D",
+      "date": "June 5, 2024",
+      "report_by": "Lisa Green, Senior Lineman",
+      "location_id": "7D",
+      "location_type": "Transmission Tower",
+      "component_name": "Wooden Pole",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Pole #78 was found to be severely rotted at the base, compromising structural integrity.",
+      "symptoms": "Visible rot or decay at the base of the pole, leaning or instability, and signs of insect infestation. The pole may also produce creaking noises under stress.",
+      "actions_taken": "Stabilized the area, removed the rotted pole, installed a new wooden pole, transferred all lines and equipment to the new pole, ensured proper alignment and tension.",
+      "challenges": [
+        "Ensuring safety while working on the unstable pole.",
+        "Transferring equipment without disrupting service."
+      ],
+      "recommendations": [
+        "Regular inspections and maintenance of poles, especially in areas prone to moisture.",
+        "Training on safe pole replacement procedures."
+      ],
+      "additional_notes": "Steps taken and tools used documented in maintenance log for reference."
+    },
+    {
+      "title": "Capacitor Bank Maintenance - Substation 9",
+      "date": "June 6, 2024",
+      "report_by": "Mark Davis, Senior Lineman",
+      "location_id": "9",
+      "location_type": "Substation",
+      "component_name": "Capacitor Bank",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Capacitor bank showing signs of decreased performance and overheating.",
+      "symptoms": "Reduced reactive power compensation, frequent tripping of capacitors, and excessive heat generation. Capacitors may also emit a burnt smell.",
+      "actions_taken": "De-energized the capacitor bank, inspected for faults, replaced faulty capacitors, cleaned and reassembled the unit, tested for performance and overheating.",
+      "challenges": [
+        "Handling high-voltage components safely.",
+        "Ensuring complete discharge before maintenance."
+      ],
+      "recommendations": [
+        "Schedule regular maintenance and testing for capacitor banks.",
+        "Training on handling and maintaining high-voltage capacitors."
+      ],
+      "additional_notes": "Maintenance procedures and performance results recorded for future reference."
+    },
+    {
+      "title": "Insulator Cleaning - Transmission Line 4E",
+      "date": "June 7, 2024",
+      "report_by": "Anna White, Senior Lineman",
+      "location_id": "4E",
+      "location_type": "Transmission Tower",
+      "component_name": "Insulators",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Heavy contamination on insulators causing power leakage.",
+      "symptoms": "Visible dirt and debris buildup on insulators, increased power leakage, and possible flashover events during high humidity or rain. Insulators may also exhibit tracking marks.",
+      "actions_taken": "De-energized the line segment, cleaned insulators using high-pressure water, inspected for damage, Applied RTV silicone to prevent buildup in the future, re-energized and tested for power leakage. ",
+      "challenges": [
+        "Ensuring thorough cleaning without damaging insulators.",
+        "Working safely at heights."
+      ],
+      "recommendations": [
+        "Regular cleaning schedule for insulators in areas with high contamination.",
+        "Training on safe cleaning techniques."
+      ],
+      "additional_notes": "Cleaning process documented and recorded in maintenance log."
+    },
+    {
+      "title": "Conductor Splicing - Line Segment 2A",
+      "date": "June 8, 2024",
+      "report_by": "James Black, Senior Lineman",
+      "location_id": "2A",
+      "location_type": "Transmission Tower",
+      "component_name": "Conductor",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Frayed conductor found at tower #15, posing a risk of failure.",
+      "symptoms": "Visible fraying or damage on the conductor surface, reduced conductivity, and signs of overheating or sparking. The line may also sag more than usual.",
+      "actions_taken": "De-energized the affected line segment, cut and removed the damaged section, spliced in new conductor, tensioned and secured the splice, re-energized and tested the line.",
+      "challenges": [
+        "Ensuring a secure and reliable splice.",
+        "Maintaining line tension during splicing."
+      ],
+      "recommendations": [
+        "Conduct regular inspections for conductor wear and tear.",
+        "Provide training on advanced splicing techniques."
+      ],
+      "additional_notes": "Splicing procedure and tools used documented for reference."
+    },
+    {
+      "title": "Substation Grounding Maintenance - Substation 6",
+      "date": "June 9, 2024",
+      "report_by": "Nancy Wilson, Senior Lineman",
+      "location_id": "6",
+      "location_type": "Substation",
+      "component_name": "Grounding System",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Grounding system found to be corroded, reducing effectiveness.",
+      "symptoms": "Visible corrosion on grounding rods and connections, increased resistance in the grounding system, and possible electrical noise or interference. The substation may also experience more frequent faults.",
+      "actions_taken": "De-energized the substation, inspected grounding connections, replaced corroded components, ensured proper grounding continuity, re-energized and tested the system.",
+      "challenges": [
+        "Ensuring complete de-energization for safe work.",
+        "Properly identifying all grounding points."
+      ],
+      "recommendations": [
+        "Schedule periodic inspections of grounding systems.",
+        "Training on grounding system maintenance and safety."
+      ],
+      "additional_notes": "Grounding maintenance steps documented for future reference."
+    },
+    {
+      "title": "Transformer Oil Replacement - Substation 7",
+      "date": "June 10, 2024",
+      "report_by": "Tom Brown, Senior Lineman",
+      "location_id": "7",
+      "location_type": "Substation",
+      "component_name": "Transformer Oil",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Transformer oil found to be contaminated, reducing cooling efficiency.",
+      "symptoms": "Oil discoloration, presence of sludge or sediment in the oil, reduced cooling efficiency, and abnormal transformer operating temperatures. The transformer may also emit unusual odors.",
+      "actions_taken": "De-energized the transformer, drained old oil, cleaned the tank, refilled with new oil, tested for proper cooling and insulation.",
+      "challenges": [
+        "Handling and disposing of contaminated oil.",
+        "Ensuring proper cleaning of the tank."
+      ],
+      "recommendations": [
+        "Regular testing of transformer oil for contamination.",
+        "Training on safe handling and replacement of transformer oil."
+      ],
+      "additional_notes": "Oil replacement procedure documented for future reference."
+    },
+    {
+      "title": "Recloser Maintenance - Line Segment 5B",
+      "date": "June 11, 2024",
+      "report_by": "Lisa Green, Senior Lineman",
+      "location_id": "5B",
+      "location_type": "Transmission Tower",
+      "component_name": "Recloser",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Recloser found to be malfunctioning during a routine test.",
+      "symptoms": "Frequent false trips, failure to reset properly, and visible damage or wear on the recloser components. The recloser may also emit unusual sounds during operation.",
+      "actions_taken": "De-energized the line segment, inspected and cleaned recloser contacts, replaced faulty components, tested for proper operation.",
+      "challenges": [
+        "Ensuring safety during de-energization and re-energization.",
+        "Identifying and replacing the correct faulty components."
+      ],
+      "recommendations": [
+        "Schedule regular maintenance and testing of reclosers.",
+        "Training on troubleshooting and repairing reclosers."
+      ],
+      "additional_notes": "Maintenance steps and test results documented for reference."
+    },
+    {
+      "title": "Switchgear Inspection - Substation 8",
+      "date": "June 12, 2024",
+      "report_by": "Mark Davis, Senior Lineman",
+      "location_id": "8",
+      "location_type": "Substation",
+      "component_name": "Switchgear",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Switchgear showing signs of wear and overheating.",
+      "symptoms": "Visible wear on switchgear components, overheating marks, and possible arcing. The switchgear may also have a burnt smell and exhibit abnormal operation.",
+      "actions_taken": "De-energized the switchgear, inspected for wear and overheating, replaced worn components, cleaned and tested for proper operation.",
+      "challenges": [
+        "Ensuring complete de-energization for safe work.",
+        "Identifying all worn components."
+      ],
+      "recommendations": [
+        "Conduct regular inspections and maintenance of switchgear.",
+        "Training on switchgear maintenance and safety."
+      ],
+      "additional_notes": "Inspection and maintenance procedures documented for future reference."
+    },
+    {
+      "title": "Voltage Regulator Adjustment - Substation 4",
+      "date": "June 13, 2024",
+      "report_by": "Jane Smith, Senior Lineman",
+      "location_id": "4",
+      "location_type": "Substation",
+      "component_name": "Voltage Regulator",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Voltage regulator settings found to be incorrect, causing voltage fluctuations.",
+      "symptoms": "Inconsistent voltage levels, frequent voltage sags or spikes, and incorrect regulator settings. The system may experience unstable operation and customer complaints of voltage issues.",
+      "actions_taken": "De-energized the voltage regulator, adjusted settings to correct values, re-energized and monitored for stable voltage.",
+      "challenges": [
+        "Ensuring accurate adjustment of settings.",
+        "Monitoring for stable voltage after adjustments."
+      ],
+      "recommendations": [
+        "Regularly check and adjust voltage regulator settings.",
+        "Training on proper adjustment techniques."
+      ],
+      "additional_notes": "Adjustment process and settings documented for future reference."
+    },
+    {
+      "title": "Breaker Panel Replacement - Substation 2",
+      "date": "June 14, 2024",
+      "report_by": "John Doe, Senior Lineman",
+      "location_id": "2",
+      "location_type": "Substation",
+      "component_name": "Breaker Panel",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Breaker panel showing signs of overheating and damage.",
+      "symptoms": "Visible burn marks or discoloration on the panel, tripping breakers, and melted or damaged components. The panel may also emit unusual sounds or odors during operation.",
+      "actions_taken": "De-energized the breaker panel, removed damaged panel, installed new panel, tested for proper operation.",
+      "challenges": [
+        "Ensuring safe de-energization and re-energization.",
+        "Properly wiring the new panel."
+      ],
+      "recommendations": [
+        "Regular inspections of breaker panels for overheating.",
+        "Training on safe replacement procedures."
+      ],
+      "additional_notes": "Replacement process documented for future reference."
+    },
+    {
+      "title": "Protective Relay Calibration - Substation 5",
+      "date": "June 15, 2024",
+      "report_by": "Tom Brown, Senior Lineman",
+      "location_id": "5",
+      "location_type": "Substation",
+      "component_name": "Protective Relay",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Protective relay found to be out of calibration, causing false trips.",
+      "symptoms": "Frequent false trips or failure to trip during faults, incorrect relay settings, and possible visible wear or damage. The relay may also produce abnormal sounds during operation.",
+      "actions_taken": "De-energized the relay, calibrated to correct settings, tested for proper operation.",
+      "challenges": [
+        "Ensuring accurate calibration.",
+        "Testing for proper operation after calibration."
+      ],
+      "recommendations": [
+        "Regularly calibrate protective relays.",
+        "Training on calibration techniques."
+      ],
+      "additional_notes": "Calibration process and settings documented for future reference."
+    },
+    {
+      "title": "Surge Arrester Replacement - Substation 3",
+      "date": "June 17, 2024",
+      "report_by": "Mark Davis, Senior Lineman",
+      "location_id": "3",
+      "location_type": "Substation",
+      "component_name": "Surge Arrester",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Surge arrester found to be damaged and not functioning properly.",
+      "symptoms": "Visible damage or burns on the surge arrester, reduced protection against surges, and possible signs of previous surge events. The arrester may also produce abnormal sounds during operation.",
+      "actions_taken": "De-energized the substation, removed damaged surge arrester, installed new surge arrester, tested for proper operation.",
+      "challenges": [
+        "Ensuring safe de-energization and re-energization.",
+        "Handling high-voltage equipment safely."
+      ],
+      "recommendations": [
+        "Regular inspections of surge arresters for damage.",
+        "Training on safe replacement procedures."
+      ],
+      "additional_notes": "Replacement process documented for future reference."
+    },
+    {
+      "title": "Overhead Line Clearance - Line Segment 8E",
+      "date": "June 18, 2024",
+      "report_by": "Nancy Wilson, Senior Lineman",
+      "location_id": "8E",
+      "location_type": "Transmission Tower",
+      "component_name": "Overhead Lines",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Vegetation encroaching on overhead lines, posing a risk of contact.",
+      "symptoms": "Visible vegetation growing close to or in contact with overhead lines, increased risk of electrical faults, and possible power outages. The lines may also exhibit signs of damage from contact.",
+      "actions_taken": "De-energized the line segment, trimmed and cleared vegetation, inspected for potential hazards, re-energized and monitored.",
+      "challenges": [
+        "Ensuring thorough clearance without damaging lines.",
+        "Working safely at heights."
+      ],
+      "recommendations": [
+        "Regular vegetation management around overhead lines.",
+        "Training on safe clearance techniques."
+      ],
+      "additional_notes": "Clearance process documented for future reference."
+    },
+    {
+      "title": "Cable Termination Repair - Substation 4",
+      "date": "June 19, 2024",
+      "report_by": "Anna White, Senior Lineman",
+      "location_id": "4",
+      "location_type": "Substation",
+      "component_name": "Cable Termination",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Cable termination found to be loose and showing signs of arcing.",
+      "symptoms": "Visible arcing marks or burns at the termination, loose connections, and possible intermittent power issues. The termination may also produce abnormal sounds or heat during operation.",
+      "actions_taken": "De-energized the substation, inspected and repaired cable termination, ensured secure connection, tested for proper operation.",
+      "challenges": [
+        "Ensuring complete de-energization for safe work.",
+        "Identifying and repairing all loose terminations."
+      ],
+      "recommendations": [
+        "Regular inspections of cable terminations.",
+        "Training on proper termination techniques."
+      ],
+      "additional_notes": "Repair process documented for future reference."
+    },
+    {
+      "title": "Line Tap Replacement - Line Segment 7F",
+      "date": "June 20, 2024",
+      "report_by": "James Black, Senior Lineman",
+      "location_id": "7F",
+      "location_type": "Transmission Tower",
+      "component_name": "Line Tap",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Line tap found to be corroded and causing high resistance.",
+      "symptoms": "Visible corrosion on the line tap, increased resistance readings, and possible power losses or overheating at the connection point. The line may also exhibit arcing or sparking.",
+      "actions_taken": "De-energized the line segment, removed corroded line tap, installed new line tap, ensured secure connection, re-energized and tested for proper operation.",
+      "challenges": [
+        "Ensuring safety during de-energization and re-energization.",
+        "Identifying and replacing all corroded components."
+      ],
+      "recommendations": [
+        "Regular inspections of line taps for corrosion.",
+        "Training on proper replacement techniques."
+      ],
+      "additional_notes": "Replacement process documented for future reference."
+    },
+    {
+      "title": "Line Tap Replacement - Line Segment 3C",
+      "date": "June 20, 2024",
+      "report_by": "James Black, Senior Lineman",
+      "location_id": "3C",
+      "location_type": "Transmission Tower",
+      "component_name": "Hanger Hook",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Insulator hanger hook was worn",
+      "symptoms": "The insulator was near separation from the tower and an enlarged hanger hole was observed during a routine visual inspection.",
+      "actions_taken": "De-energized the line segment, replaced the hangar hook with a new galvanized steel hook. The hook was at least 70 years old and was made of plyable metal that was prone to wear from wind and corrosion.",
+      "challenges": [
+        ""
+      ],
+      "recommendations": [
+        "Additional inspections of all towers having these types of old hooks"
+      ],
+      "additional_notes": "Replacement process documented for future reference."
+    },
+    {
+      "title": "Oil Circuit Breaker Maintenance - Substation 9",
+      "date": "June 21, 2024",
+      "report_by": "Tom Brown, Senior Lineman",
+      "location_id": "9",
+      "location_type": "Substation",
+      "component_name": "Oil Circuit Breaker",
+      "latitude": "34.0522",
+      "longitude": "-118.2437",
+      "issue_identified": "Oil circuit breaker showing signs of oil leakage and arcing.",
+      "symptoms": "Visible oil stains or leakage, signs of arcing or burns on the breaker, and possible overheating. The breaker may also emit unusual sounds or fail to operate properly.",
+      "actions_taken": "De-energized the substation, inspected and repaired oil circuit breaker, replaced leaking seals, tested for proper operation.",
+      "challenges": [
+        "Ensuring safe de-energization and re-energization.",
+        "Handling and disposing of leaking oil."
+      ],
+      "recommendations": [
+        "Regular inspections of oil circuit breakers.",
+        "Training on proper maintenance and repair techniques."
+      ],
+      "additional_notes": "Maintenance process documented for future reference."
+    }
+  ]
+}

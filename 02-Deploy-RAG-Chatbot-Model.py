@@ -46,7 +46,7 @@ if skip_setup:
 # COMMAND ----------
 
 # DBTITLE 1,Install the required libraries
-# MAGIC %pip install mlflow==2.10.1 langchain==0.1.5 databricks-vectorsearch==0.22 databricks-sdk==0.18.0 mlflow[databricks]
+# MAGIC %pip install --ignore-installed mlflow==2.10.1 langchain==0.1.5 databricks-vectorsearch==0.22 databricks-sdk==0.18.0 mlflow[databricks]
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
@@ -110,7 +110,7 @@ if skip_setup:
 
 # DBTITLE 1,Setup authentication for our model
 # url used to send the request to your model from the serverless endpoint
-index_name=f"{catalog}.{db}.databricks_pdf_documentation_self_managed_vs_index"
+index_name=f"{catalog}.{db}.repair_reports_self_managed_vs_index"
 host = "https://" + spark.conf.get("spark.databricks.workspaceUrl")
 os.environ['DATABRICKS_TOKEN'] = dbutils.secrets.get("dbdemos", "rag_sp_token")
 
@@ -141,9 +141,14 @@ def get_retriever(persist_dir: str = None):
     return vectorstore.as_retriever()
 
 
-# test our retriever
+# test our retriever 
 vectorstore = get_retriever()
-similar_documents = vectorstore.get_relevant_documents("How do I track my Databricks Billing?")
+similar_documents = vectorstore.get_relevant_documents("This hanger hook hole looks enlarged")
+print(f"Relevant documents: {similar_documents[0]}")
+
+# COMMAND ----------
+
+similar_documents = vectorstore.get_relevant_documents("The insulator looks like it has track marks")
 print(f"Relevant documents: {similar_documents[0]}")
 
 # COMMAND ----------
@@ -194,7 +199,7 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.chat_models import ChatDatabricks
 
-TEMPLATE = """You are an aid for analysts to discover infromation in their PDFs.
+TEMPLATE = """You are a helpful aid for electrical lineman to help them identify repairs and how to fix thme.
 Use the following pieces of context to answer the question at the end:
 {context}
 Question: {question}
@@ -213,7 +218,14 @@ chain = RetrievalQA.from_chain_type(
 
 # DBTITLE 1,Let's try our chatbot in the notebook directly:
 # langchain.debug = True #uncomment to see the chain details and the full prompt being sent
-question = {"query": "How can I track billing usage on my workspaces?"}
+question = {"query": "The insulator looks like it has track marks"}
+answer = chain.run(question)
+print(answer)
+
+# COMMAND ----------
+
+# langchain.debug = True #uncomment to see the chain details and the full prompt being sent
+question = {"query": "This hanger hook hole looks enlarged"}
 answer = chain.run(question)
 print(answer)
 
@@ -307,7 +319,7 @@ displayHTML(f'Your Model Endpoint Serving is now available. Open the <a href="/m
 # COMMAND ----------
 
 # DBTITLE 1,Let's try to send a query to our chatbot
-question = "How can I make my data ingestion API efficient? Explain concisely."
+question = "The insulator looks like it has track marks"
 
 answer = w.serving_endpoints.query(serving_endpoint_name, inputs=[{"query": question}])
 print(answer.predictions)

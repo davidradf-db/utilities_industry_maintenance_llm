@@ -81,30 +81,138 @@ os.environ['PDF_LINK'] = pdf_link
 
 # COMMAND ----------
 
-# MAGIC %sh curl $PDF_LINK --output /tmp/first_pdf.pdf
+# MAGIC %sh cp ./_resources/maint_records.json /tmp/maint_records.json
 
 # COMMAND ----------
 
-dbutils.fs.cp("file:/tmp/first_pdf.pdf", volume_folder)
+dbutils.fs.cp("file:/tmp/maint_records.json", volume_folder)
 
 # COMMAND ----------
 
-# DBTITLE 1,Ingesting PDF files as binary format using Databricks cloudFiles (Autoloader)
-df = (spark.readStream
-        .format('cloudFiles')
-        .option('cloudFiles.format', 'BINARYFILE')
-        .option("pathGlobFilter", "*.pdf")
-        .load('dbfs:'+volume_folder))
+spark.sql(f"""create or replace table {catalog}.{db}.asset_locations (location_id string, lat double, long double, location_type string)""")
 
-# Write the data as a Delta table
-(df.writeStream
-  .trigger(availableNow=True)
-  .option("checkpointLocation", f'dbfs:{volume_folder}/checkpoints/raw_docs')
-  .table('pdf_raw').awaitTermination())
+spark.sql(f"""insert into {catalog}.{db}.asset_locations values
+('9',42.0550,-99.2550,"Substation"),
+('8F',42.0000,-99.2000,"Transmission_Tower"),
+('7C',42.0050,-99.2050,"Transmission_Tower"),
+('6D',42.0100,-99.2100,"Transmission_Tower"),
+('5B',42.0150,-99.2200,"Transmission_Tower"),
+('4A',42.0200,-99.2150,"Transmission_Tower"),
+('3C',42.0250,-99.2250,"Transmission_Tower"),
+('2B',42.0300,-99.2300,"Transmission_Tower"),
+('1D',42.0350,-99.2350,"Transmission_Tower"),
+('0C',42.0400,-99.2400,"Transmission_Tower"),
+('9A',42.0450,-99.2450,"Transmission_Tower"),
 
-# COMMAND ----------
+('8',41.9550,-99.1550,"Substation"),
+('1E',41.9000,-99.1000,"Transmission_Tower"),
+('0B',41.9050,-99.1050,"Transmission_Tower"),
+('9D',41.9100,-99.1100,"Transmission_Tower"),
+('8A',41.9150,-99.1200,"Transmission_Tower"),
+('7C',41.9200,-99.1150,"Transmission_Tower"),
+('6B',41.9250,-99.1250,"Transmission_Tower"),
+('5D',41.9300,-99.1300,"Transmission_Tower"),
+('4C',41.9350,-99.1350,"Transmission_Tower"),
+('3A',41.9400,-99.1400,"Transmission_Tower"),
+('2E',41.9450,-99.1450,"Transmission_Tower"),
 
-# MAGIC %sql SELECT * FROM pdf_raw LIMIT 2
+('7',41.8550,-99.0550,"Substation"),
+('7F',41.8000,-99.0000,"Transmission_Tower"),
+('6C',41.8050,-99.0050,"Transmission_Tower"),
+('5D',41.8100,-99.0100,"Transmission_Tower"),
+('4B',41.8150,-99.0200,"Transmission_Tower"),
+('3A',41.8200,-99.0150,"Transmission_Tower"),
+('2C',41.8250,-99.0250,"Transmission_Tower"),
+('1B',41.8300,-99.0300,"Transmission_Tower"),
+('0D',41.8350,-99.0350,"Transmission_Tower"),
+('9C',41.8400,-99.0400,"Transmission_Tower"),
+('8A',41.8450,-99.0450,"Transmission_Tower"),
+
+('6',41.7550,-98.9550,"Substation"),
+('4E',41.7000,-98.9000,"Transmission_Tower"),
+('3B',41.7050,-98.9050,"Transmission_Tower"),
+('2D',41.7100,-98.9100,"Transmission_Tower"),
+('1A',41.7150,-98.9200,"Transmission_Tower"),
+('0C',41.7200,-98.9150,"Transmission_Tower"),
+('9B',41.7250,-98.9250,"Transmission_Tower"),
+('8D',41.7300,-98.9300,"Transmission_Tower"),
+('7C',41.7350,-98.9350,"Transmission_Tower"),
+('6A',41.7400,-98.9400,"Transmission_Tower"),
+('5E',41.7450,-98.9450,"Transmission_Tower"),
+
+('5',41.6550,-98.8550,"Substation"),
+('6F',41.6000,-98.8000,"Transmission_Tower"),
+('5C',41.6050,-98.8050,"Transmission_Tower"),
+('4D',41.6100,-98.8100,"Transmission_Tower"),
+('3B',41.6150,-98.8200,"Transmission_Tower"),
+('2A',41.6200,-98.8150,"Transmission_Tower"),
+('1C',41.6250,-98.8250,"Transmission_Tower"),
+('0B',41.6300,-98.8300,"Transmission_Tower"),
+('9D',41.6350,-98.8350,"Transmission_Tower"),
+('8C',41.6400,-98.8400,"Transmission_Tower"),
+('7A',41.6450,-98.8450,"Transmission_Tower"),
+
+('4',41.5550,-98.7550,"Substation"),
+('2E',41.5000,-98.7000,"Transmission_Tower"),
+('1B',41.5050,-98.7050,"Transmission_Tower"),
+('0C',41.5100,-98.7100,"Transmission_Tower"),
+('9D',41.5150,-98.7200,"Transmission_Tower"),
+('8A',41.5200,-98.7150,"Transmission_Tower"),
+('7B',41.5250,-98.7250,"Transmission_Tower"),
+('6C',41.5300,-98.7300,"Transmission_Tower"),
+('5D',41.5350,-98.7350,"Transmission_Tower"),
+('4A',41.5400,-98.7400,"Transmission_Tower"),
+('3E',41.5450,-98.7450,"Transmission_Tower"),
+
+('3',41.4550,-98.6550,"Substation"),
+('5F',41.4000,-98.6000,"Transmission_Tower"),
+('4C',41.4050,-98.6050,"Transmission_Tower"),
+('3D',41.4100,-98.6100,"Transmission_Tower"),
+('2B',41.4150,-98.6200,"Transmission_Tower"),
+('1A',41.4200,-98.6150,"Transmission_Tower"),
+('0C',41.4250,-98.6250,"Transmission_Tower"),
+('9B',41.4300,-98.6300,"Transmission_Tower"),
+('8D',41.4350,-98.6350,"Transmission_Tower"),
+('7C',41.4400,-98.6400,"Transmission_Tower"),
+('6A',41.4450,-98.6450,"Transmission_Tower"),
+
+('2',41.3450,-98.5450,"Substation"),
+('3B',41.3000,-98.5000,"Transmission_Tower"),
+('2D',41.3050,-98.5050,"Transmission_Tower"),
+('1E',41.3100,-98.5100,"Transmission_Tower"),
+('0A',41.3150,-98.5200,"Transmission_Tower"),
+('9D',41.3200,-98.5150,"Transmission_Tower"),
+('8E',41.3250,-98.5250,"Transmission_Tower"),
+('7B',41.3300,-98.5300,"Transmission_Tower"),
+('6C',41.3350,-98.5350,"Transmission_Tower"),
+('5A',41.3400,-98.5400,"Transmission_Tower"),
+('4D',41.3450,-98.5450,"Transmission_Tower"),
+
+('13',41.2520,-98.4520,"Substation"),
+('9B',41.2000,-98.4000,"Transmission_Tower"),
+('8C',41.2050,-98.4050,"Transmission_Tower"),
+('7G',41.2100,-98.4100,"Transmission_Tower"),
+('6D',41.2150,-98.4200,"Transmission_Tower"),
+('5E',41.2200,-98.4150,"Transmission_Tower"),
+('4A',41.2250,-98.4250,"Transmission_Tower"),
+('3C',41.2300,-98.4300,"Transmission_Tower"),
+('2B',41.2350,-98.4350,"Transmission_Tower"),
+('1D',41.2400,-98.4400,"Transmission_Tower"),
+('0E',41.2450,-98.4450,"Transmission_Tower"),
+
+
+('21',41.1120,-98.3120,"Substation"),
+('8E',41.1000,-98.3000,"Transmission_Tower"),
+('7F',41.1050,-98.3050,"Transmission_Tower"),
+('7D',41.1100,-98.3100,"Transmission_Tower"),
+('5B',41.1150,-98.3200,"Transmission_Tower"),
+('4E',41.1200,-98.3150,"Transmission_Tower"),
+('2A',41.1250,-98.3250,"Transmission_Tower"),
+('12B',41.1300,-98.3300,"Transmission_Tower"),
+('17E',41.1350,-98.3350,"Transmission_Tower"),
+('17A',41.1400,-98.3400,"Transmission_Tower"),
+('17B',41.1450,-98.3450,"Transmission_Tower")""")
+
 
 # COMMAND ----------
 
@@ -148,203 +256,61 @@ df = (spark.readStream
 
 # COMMAND ----------
 
-# DBTITLE 1,To extract our PDF,  we'll need to setup libraries in our nodes
-# For production use-case, install the libraries at your cluster level with an init script instead. 
-install_ocr_on_nodes()
+spark.read.json(f'/Volumes/{catalog}/{db}/raw_document_landing_zone/',multiLine=True).createOrReplaceTempView("raw_records")
 
 # COMMAND ----------
 
-# MAGIC %md 
-# MAGIC Let's start by extracting text from our PDF.
+spark.sql(f"""CREATE or replace TABLE {catalog}.{db}.repair_reports (
+  id bigint generated always as identity,
+  additional_notes STRING,
+  component_name STRING,
+  issue_identified STRING,
+  location_id STRING,
+  report_by STRING,
+  title STRING,
+  challenges STRING,
+  content string,
+  date DATE)
+USING delta
+TBLPROPERTIES (
+  'delta.enableChangeDataFeed' = 'true',
+  'delta.enableDeletionVectors' = 'true',
+  'delta.feature.deletionVectors' = 'supported',
+  'delta.minReaderVersion' = '3',
+  'delta.minWriterVersion' = '7')
+""")
 
 # COMMAND ----------
 
-# DBTITLE 1,Transform pdf as text
-from unstructured.partition.auto import partition
-import re
-
-def extract_doc_text(x : bytes) -> str:
-  # Read files and extract the values with unstructured
-  sections = partition(file=io.BytesIO(x))
-  def clean_section(txt):
-    txt = re.sub(r'\n', '', txt)
-    return re.sub(r' ?\.', '.', txt)
-  # Default split is by section of document, concatenate them all together because we want to split by sentence instead.
-  return "\n".join([clean_section(s.text) for s in sections]) 
-
-# COMMAND ----------
-
-# DBTITLE 1,Trying our text extraction function with a single pdf file
-import io
-import re
-with requests.get(pdf_link) as pdf:
-  doc = extract_doc_text(pdf.content)  
-  print(doc)
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC This looks great. We'll now wrap it with a text_splitter to avoid having too big pages, and create a Pandas UDF function to easily scale that across multiple nodes.
-# MAGIC
-# MAGIC *Note that our pdf text isn't clean. To make it nicer, we could use a few extra LLM-based pre-processing steps, asking to remove unrelevant content like the list of chapters and to only keep the core text.*
-
-# COMMAND ----------
-
-from llama_index.langchain_helpers.text_splitter import SentenceSplitter
-from llama_index import Document, set_global_tokenizer
-from transformers import AutoTokenizer
-
-# Reduce the arrow batch size as our PDF can be big in memory
-spark.conf.set("spark.sql.execution.arrow.maxRecordsPerBatch", 10)
-
-@pandas_udf("array<string>")
-def read_as_chunk(batch_iter: Iterator[pd.Series]) -> Iterator[pd.Series]:
-    #set llama2 as tokenizer to match our model size (will stay below BGE 1024 limit)
-    set_global_tokenizer(
-      AutoTokenizer.from_pretrained("hf-internal-testing/llama-tokenizer")
-    )
-    #Sentence splitter from llama_index to split on sentences
-    splitter = SentenceSplitter(chunk_size=500, chunk_overlap=50)
-    def extract_and_split(b):
-      txt = extract_doc_text(b)
-      nodes = splitter.get_nodes_from_documents([Document(text=txt)])
-      return [n.text for n in nodes]
-
-    for x in batch_iter:
-        yield x.apply(extract_and_split)
-
-# COMMAND ----------
-
-# MAGIC %md-sandbox
-# MAGIC ## What's required for our Vector Search Index
-# MAGIC
-# MAGIC <img src="https://github.com/databricks-demos/dbdemos-resources/blob/main/images/product/chatbot-rag/databricks-vector-search-type.png?raw=true" style="float: right" width="800px">
-# MAGIC
-# MAGIC Databricks provide multiple types of vector search indexes:
-# MAGIC
-# MAGIC - **Managed embeddings**: you provide a text column and endpoint name and Databricks synchronizes the index with your Delta table 
-# MAGIC - **Self Managed embeddings**: you compute the embeddings and save them as a field of your Delta Table, Databricks will then synchronize the index
-# MAGIC - **Direct index**: when you want to use and update the index without having a Delta Table.
-# MAGIC
-# MAGIC In this demo, we will show you how to setup a **Self-managed Embeddings** index. 
-# MAGIC
-# MAGIC To do so, we will have to first compute the embeddings of our chunks and save them as a Delta Lake table field as `array&ltfloat&gt`
-
-# COMMAND ----------
-
-# MAGIC %md-sandbox
-# MAGIC ## Introducing Databricks BGE Embeddings Foundation Model endpoints
-# MAGIC
-# MAGIC <img src="https://github.com/databricks-demos/dbdemos-resources/blob/main/images/product/chatbot-rag/rag-pdf-self-managed-4.png?raw=true" style="float: right; width: 600px; margin-left: 10px">
-# MAGIC
-# MAGIC Foundation Models are provided by Databricks, and can be used out-of-the-box.
-# MAGIC
-# MAGIC Databricks supports several endpoint types to compute embeddings or evaluate a model:
-# MAGIC - A **foundation model endpoint**, provided by databricks (ex: DBRX, MPT...)
-# MAGIC - An **external endpoint**, acting as a gateway to an external model (ex: Azure OpenAI)
-# MAGIC - A **custom**, fined-tuned model hosted on Databricks model service
-# MAGIC
-# MAGIC Open the [Model Serving Endpoint page](/ml/endpoints) to explore and try the foundation models.
-# MAGIC
-# MAGIC For this demo, we will use the foundation model `BGE` (embeddings) and `DBRX` (chat). <br/><br/>
-# MAGIC
-# MAGIC <img src="https://github.com/databricks-demos/dbdemos-resources/blob/main/images/product/chatbot-rag/databricks-foundation-models.png?raw=true" width="600px" >
-
-# COMMAND ----------
-
-# DBTITLE 1,Using Databricks Foundation model BGE as embedding endpoint
-from mlflow.deployments import get_deploy_client
-
-# bge-large-en Foundation models are available using the /serving-endpoints/databricks-bge-large-en/invocations api. 
-deploy_client = get_deploy_client("databricks")
-
-## NOTE: if you change your embedding model here, make sure you change it in the query step too
-embeddings = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": ["What is Apache Spark?"]})
-pprint(embeddings)
-
-# COMMAND ----------
-
-# DBTITLE 1,Create the final databricks_pdf_documentation table containing chunks and embeddings
-# MAGIC %sql
-# MAGIC --Note that we need to enable Change Data Feed on the table to create the index
-# MAGIC CREATE TABLE IF NOT EXISTS databricks_pdf_documentation (
-# MAGIC   id BIGINT GENERATED BY DEFAULT AS IDENTITY,
-# MAGIC   url STRING,
-# MAGIC   content STRING,
-# MAGIC   embedding ARRAY <FLOAT>
-# MAGIC ) TBLPROPERTIES (delta.enableChangeDataFeed = true); 
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ### Computing the chunk embeddings and saving them to our Delta Table
-# MAGIC
-# MAGIC The last step is to now compute an embedding for all our documentation chunks. Let's create an udf to compute the embeddings using the foundation model endpoint.
-# MAGIC
-# MAGIC *Note that this part would typically be setup as a production-grade job, running as soon as a new documentation page is updated. <br/> This could be setup as a Delta Live Table pipeline to incrementally consume updates.*
-
-# COMMAND ----------
-
-@pandas_udf("array<float>")
-def get_embedding(contents: pd.Series) -> pd.Series:
-    import mlflow.deployments
-    deploy_client = mlflow.deployments.get_deploy_client("databricks")
-    def get_embeddings(batch):
-        #Note: this will fail if an exception is thrown during embedding creation (add try/except if needed) 
-        response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": batch})
-        return [e['embedding'] for e in response.data]
-
-    # Splitting the contents into batches of 150 items each, since the embedding model takes at most 150 inputs per request.
-    max_batch_size = 150
-    batches = [contents.iloc[i:i + max_batch_size] for i in range(0, len(contents), max_batch_size)]
-
-    # Process each batch and collect the results
-    all_embeddings = []
-    for batch in batches:
-        all_embeddings += get_embeddings(batch.tolist())
-
-    return pd.Series(all_embeddings)
-
-# COMMAND ----------
-
-(spark.readStream.table('pdf_raw')
-      .withColumn("content", F.explode(read_as_chunk("content")))
-      .withColumn("embedding", get_embedding("content"))
-      .selectExpr('path as url', 'content', 'embedding')
-  .writeStream
-    .trigger(availableNow=True)
-    .option("checkpointLocation", f'dbfs:{volume_folder}/checkpoints/pdf_chunk')
-    .table('databricks_pdf_documentation').awaitTermination())
-
-#Let's also add our documentation web page from the simple demo (make sure you run the quickstart demo first)
-if table_exists(f'{catalog}.{db}.databricks_documentation'):
-  (spark.readStream.table('databricks_documentation')
-      .withColumn('embedding', get_embedding("content"))
-      .select('url', 'content', 'embedding')
-  .writeStream
-    .trigger(availableNow=True)
-    .option("checkpointLocation", f'dbfs:{volume_folder}/checkpoints/docs_chunks')
-    .table('databricks_pdf_documentation').awaitTermination())
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC SELECT * FROM databricks_pdf_documentation WHERE url like '%.pdf' limit 10
-
-# COMMAND ----------
-
-# MAGIC %md-sandbox
-# MAGIC
-# MAGIC ### Our dataset is now ready! Let's create our Self-Managed Vector Search Index.
-# MAGIC
-# MAGIC <img src="https://github.com/databricks-demos/dbdemos-resources/blob/main/images/product/chatbot-rag/rag-pdf-self-managed-3.png?raw=true" style="float: right; width: 600px; margin-left: 10px">
-# MAGIC
-# MAGIC Our dataset is now ready. We chunked the documentation pages into small sections, computed the embeddings and saved it as a Delta Lake table.
-# MAGIC
-# MAGIC Next, we'll configure Databricks Vector Search to ingest data from this table.
-# MAGIC
-# MAGIC Vector search index uses a Vector search endpoint to serve the embeddings (you can think about it as your Vector Search API endpoint). <br/>
-# MAGIC Multiple Indexes can use the same endpoint. Let's start by creating one.
+spark.sql(f"""insert overwrite table {catalog}.{db}.repair_reports (additional_notes, component_name, issue_identified,location_id, report_by, title, challenges,content, date)  with exploded_reports as(
+  select
+    explode(reports) as report
+  from
+    raw_records
+),
+exploded_elements as(
+  select
+    report.*
+  from
+    exploded_reports
+)
+select
+  *
+except(
+    challenges,
+    date,
+    recommendations,
+    latitude,
+    longitude,
+    location_type,
+    symptoms,
+    actions_taken
+  ),
+  concat_ws(' ', challenges) as challenges,
+  'symptoms: '||symptoms||" Actions Taken: "||actions_taken as content,
+  to_date(date, 'MMMM d, yyyy') as date
+from
+  exploded_elements""")
 
 # COMMAND ----------
 
@@ -371,9 +337,9 @@ from databricks.sdk import WorkspaceClient
 import databricks.sdk.service.catalog as c
 
 #The table we'd like to index
-source_table_fullname = f"{catalog}.{db}.databricks_pdf_documentation"
+source_table_fullname = f"{catalog}.{db}.repair_reports"
 # Where we want to store our index
-vs_index_fullname = f"{catalog}.{db}.databricks_pdf_documentation_self_managed_vs_index"
+vs_index_fullname = f"{catalog}.{db}.repair_reports_self_managed_vs_index"
 
 if not index_exists(vsc, VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname):
   print(f"Creating index {vs_index_fullname} on endpoint {VECTOR_SEARCH_ENDPOINT_NAME}...")
@@ -381,10 +347,10 @@ if not index_exists(vsc, VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname):
     endpoint_name=VECTOR_SEARCH_ENDPOINT_NAME,
     index_name=vs_index_fullname,
     source_table_name=source_table_fullname,
-    pipeline_type="CONTINUOUS", #Sync needs to be manually triggered
+    pipeline_type="TRIGGERED", #Sync needs to be manually triggered
     primary_key="id",
-    embedding_dimension=1024, #Match your model embedding size (bge)
-    embedding_vector_column="embedding"
+    embedding_source_column="content",
+    embedding_model_endpoint_name="databricks-bge-large-en"
   )
 
 #Let's wait for the index to be ready and all our embeddings to be created and indexed
@@ -405,14 +371,28 @@ wait_for_index_to_be_ready(vsc, VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname)
 
 # COMMAND ----------
 
-question = "How can I track billing usage on my workspaces?"
+question = "The insulator looks like it has track marks"
 
-response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
-embeddings = [e['embedding'] for e in response.data]
+# response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
+
 
 results = vsc.get_index(VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname).similarity_search(
-  query_vector=embeddings[0],
-  columns=["url", "content"],
+  query_text=question,
+  columns=["actions_taken", "challenges", "issue_identified"],
+  num_results=1)
+docs = results.get('result', {}).get('data_array', [])
+pprint(docs)
+
+# COMMAND ----------
+
+question = "This hanger hook hole looks enlarged"
+
+# response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
+
+
+results = vsc.get_index(VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname).similarity_search(
+  query_text=question,
+  columns=["actions_taken", "challenges", "issue_identified"],
   num_results=1)
 docs = results.get('result', {}).get('data_array', [])
 pprint(docs)
