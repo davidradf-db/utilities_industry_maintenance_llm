@@ -193,20 +193,41 @@ DESCRIPTION = f"""
 This chatbot helps you answers questions regarding {customer_name}. It uses retrieval augmented generation to infuse data relevant to your question into the LLM and generates an accurate response.
 """
 
-def process_example(img):
 
-    # system_prompt, max_new_tokens, temperature, top_p, top_k
-    output = generate_output(base64.b64encode(helper_to_bytes(img)).decode('utf-8'))
-    return output
 
-demo = gr.Interface(
-    fn=process_example,
-    inputs=[
-        gr.Image(label='test', type='pil'),
-            ],
-    outputs=[
-        gr.Textbox(label="part number")],
-)
+with gr.Blocks(theme=gr.themes.Soft()) as demo:
+    # with gr.Row():
+    #     gr.HTML(
+    #         show_label=False,
+    #         value="<img src='https://databricks.gallerycdn.vsassets.io/extensions/databricks/databricks/0.3.15/1686753455931/Microsoft.VisualStudio.Services.Icons.Default' height='40' width='40'/><div font size='1'></div>",
+    #     )
+    gr.Markdown(DESCRIPTION)
+    # chatbot = gr.Chatbot(height=500)
+    img = gr.Image(label="Part Image", type="pil")
+    msg = gr.Textbox(label="Message", type="text")                 
+    clear = gr.ClearButton([msg])
+
+    def process_example(img):
+
+        # system_prompt, max_new_tokens, temperature, top_p, top_k
+        output = generate_output(base64.b64encode(helper_to_bytes(img)).decode('utf-8'))
+        return output
+    img.upload(fn=process_example,
+               inputs=[img],
+               outputs=[msg])
+    
+    # img.submit(fn=process_example,
+    #     inputs=[img],
+    #     outputs=[msg])
+        
+# demo = gr.Interface(
+#     fn=process_example,
+#     inputs=[
+#         gr.Image(label='test', type='pil'),
+#             ],
+#     outputs=[
+#         gr.Textbox(label="part number")],
+# )
 
 # COMMAND ----------
 
