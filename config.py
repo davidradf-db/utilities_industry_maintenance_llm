@@ -2,7 +2,7 @@
 dbutils.widgets.text("catalog", "dbdemos", "Data Catalog")
 dbutils.widgets.text("customer_name", "newco", "Organization Name")
 dbutils.widgets.text("pdf_link", "https://content.cdntwrk.com/files/aT0xMzkwNjczJnY9MiZpc3N1ZU5hbWU9dGhlLWZpdmV0cmFuLXByb3RvY29sLWVib29rJmNtZD1kJnNpZz0yOTQ3NzFhNmZhMDBjMzQyOWVhMmJjNDhjYmQ5Mzk2Yw%253D%253D", "Link to PDF to Start VS")
-dbutils.widgets.text("vs_endpoint", "one-env-shared-endpoint-7", "VS Endpoint")
+dbutils.widgets.text("vs_endpoint", "one-env-shared-endpoint-0", "VS Endpoint")
 
 # COMMAND ----------
 

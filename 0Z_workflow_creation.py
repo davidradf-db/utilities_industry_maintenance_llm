@@ -81,7 +81,7 @@ job_config = {
         },
         {
             "task_key": "02-Deploy-image-search-Model",
-            "depends_on": [{"task_key": "01-Image-Ingestion-and-Index-Creation"}],
+            "depends_on": [{"task_key": "01-Image-Preparation-and-Index"}],
             "run_if": "ALL_SUCCESS",
             "notebook_task": {
                 "notebook_path": "02-Deploy-image-search-Model",
