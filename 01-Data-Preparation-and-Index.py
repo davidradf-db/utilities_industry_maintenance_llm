@@ -371,31 +371,31 @@ wait_for_index_to_be_ready(vsc, VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname)
 
 # COMMAND ----------
 
-question = "The insulator looks like it has track marks"
+# question = "The insulator looks like it has track marks"
 
-# response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
+# # response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
 
 
-results = vsc.get_index(VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname).similarity_search(
-  query_text=question,
-  columns=["actions_taken", "challenges", "issue_identified"],
-  num_results=1)
-docs = results.get('result', {}).get('data_array', [])
-pprint(docs)
+# results = vsc.get_index(VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname).similarity_search(
+#   query_text=question,
+#   columns=["actions_taken", "challenges", "issue_identified"],
+#   num_results=1)
+# docs = results.get('result', {}).get('data_array', [])
+# pprint(docs)
 
 # COMMAND ----------
 
-question = "This hanger hook hole looks enlarged"
+# question = "This hanger hook hole looks enlarged"
 
-# response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
+# # response = deploy_client.predict(endpoint="databricks-bge-large-en", inputs={"input": [question]})
 
 
-results = vsc.get_index(VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname).similarity_search(
-  query_text=question,
-  columns=["actions_taken", "challenges", "issue_identified"],
-  num_results=1)
-docs = results.get('result', {}).get('data_array', [])
-pprint(docs)
+# results = vsc.get_index(VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname).similarity_search(
+#   query_text=question,
+#   columns=["actions_taken", "challenges", "issue_identified"],
+#   num_results=1)
+# docs = results.get('result', {}).get('data_array', [])
+# pprint(docs)
 
 # COMMAND ----------
 

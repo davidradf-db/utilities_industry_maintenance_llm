@@ -134,59 +134,59 @@ wait_for_index_to_be_ready(vsc, VECTOR_SEARCH_ENDPOINT_NAME, vs_index_fullname)
 
 # COMMAND ----------
 
-from databricks.vector_search.client import VectorSearchClient
+# from databricks.vector_search.client import VectorSearchClient
 
-vsc = VectorSearchClient()
+# vsc = VectorSearchClient()
 
-index = vsc.get_index(endpoint_name="one-env-shared-endpoint-5", index_name="dbdemos.rag_chatbot_david_radford_newco.part_no_lookup")
-
-# COMMAND ----------
-
-index.similarity_search(
-  query_vector=one_vector.squeeze(0).tolist(),
-  columns=['part_no']
-)
+# index = vsc.get_index(endpoint_name="one-env-shared-endpoint-5", index_name="dbdemos.rag_chatbot_david_radford_newco.part_no_lookup")
 
 # COMMAND ----------
 
-one_image = Image.open('./flagged/Worn_hook_labeled.png')
-one_vector = get_single_image_embedding(one_image, processor, model, device)
-index.similarity_search(
-  query_vector=one_vector.squeeze(0).tolist(),
-  columns=['part_no']
-)
+# index.similarity_search(
+#   query_vector=one_vector.squeeze(0).tolist(),
+#   columns=['part_no']
+# )
 
 # COMMAND ----------
 
-import io
-
-def helper_to_bytes(img):
-    img_bytes = io.BytesIO()
-    img.save(img_bytes, format='PNG')
-    return img_bytes.getvalue()
-
-# COMMAND ----------
-
-one_image.size
+# one_image = Image.open('./flagged/Worn_hook_labeled.png')
+# one_vector = get_single_image_embedding(one_image, processor, model, device)
+# index.similarity_search(
+#   query_vector=one_vector.squeeze(0).tolist(),
+#   columns=['part_no']
+# )
 
 # COMMAND ----------
 
-import io
-_bytes = helper_to_bytes(one_image)
-# print(_bytes)
-# Image.frombytes('RGB', (128,128), _bytes, 'raw')
-Image.open(io.BytesIO(_bytes))
+# import io
 
-# get_single_image_embedding(_bytes, processor, model, device)
+# def helper_to_bytes(img):
+#     img_bytes = io.BytesIO()
+#     img.save(img_bytes, format='PNG')
+#     return img_bytes.getvalue()
 
 # COMMAND ----------
 
-def get_single_image_embedding(my_image,processor, model, device):
-  image = processor(
-      text = None,
-      images = my_image,
-      return_tensors="pt"
-      )["pixel_values"].to(device)
-  embedding = model.get_image_features(image)
-  # convert the embeddings to numpy array
-  return embedding.cpu().detach().numpy()
+# one_image.size
+
+# COMMAND ----------
+
+# import io
+# _bytes = helper_to_bytes(one_image)
+# # print(_bytes)
+# # Image.frombytes('RGB', (128,128), _bytes, 'raw')
+# Image.open(io.BytesIO(_bytes))
+
+# # get_single_image_embedding(_bytes, processor, model, device)
+
+# COMMAND ----------
+
+# def get_single_image_embedding(my_image,processor, model, device):
+#   image = processor(
+#       text = None,
+#       images = my_image,
+#       return_tensors="pt"
+#       )["pixel_values"].to(device)
+#   embedding = model.get_image_features(image)
+#   # convert the embeddings to numpy array
+#   return embedding.cpu().detach().numpy()
