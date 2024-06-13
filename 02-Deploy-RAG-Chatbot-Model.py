@@ -319,10 +319,10 @@ displayHTML(f'Your Model Endpoint Serving is now available. Open the <a href="/m
 # COMMAND ----------
 
 # DBTITLE 1,Let's try to send a query to our chatbot
-question = "The insulator looks like it has track marks"
+# question = "The insulator looks like it has track marks"
 
-answer = w.serving_endpoints.query(serving_endpoint_name, inputs=[{"query": question}])
-print(answer.predictions)
+# answer = w.serving_endpoints.query(serving_endpoint_name, inputs=[{"query": question}])
+# print(answer.predictions)
 
 # COMMAND ----------
 
