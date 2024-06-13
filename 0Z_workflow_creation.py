@@ -90,27 +90,38 @@ job_config = {
             "job_cluster_key": "Job_cluster",
         },
         {
-            "task_key": "03-RAG-Gradio-App",
-            "depends_on": [{"task_key": "02-Deploy-RAG-Chatbot-Model"}],
+            "task_key": "03-Gradio-App",
+            "depends_on": [{"task_key": "02-Deploy-RAG-Chatbot-Model"},{"task_key":"02-Deploy-image-search-Model"}],
             "run_if": "ALL_SUCCESS",
             "notebook_task": {
-                "notebook_path": "03-RAG-Gradio-App",
+                "notebook_path": "03-Gradio-App",
                 "base_parameters": {"workspace_id": "{{workspace.id}}"},
                 "source": "GIT",
             },
             "job_cluster_key": "Job_cluster",
         },
-        {
-            "task_key": "03-Image-Search-Gradio-App",
-            "depends_on": [{"task_key": "02-Deploy-image-search-Model"}],
-            "run_if": "ALL_SUCCESS",
-            "notebook_task": {
-                "notebook_path": "03-Image-Search-Gradio-App",
-                "base_parameters": {"workspace_id": "{{workspace.id}}"},
-                "source": "GIT",
-            },
-            "job_cluster_key": "Job_cluster",
-        },
+        # {
+        #     "task_key": "03-RAG-Gradio-App",
+        #     "depends_on": [{"task_key": "02-Deploy-RAG-Chatbot-Model"}],
+        #     "run_if": "ALL_SUCCESS",
+        #     "notebook_task": {
+        #         "notebook_path": "03-RAG-Gradio-App",
+        #         "base_parameters": {"workspace_id": "{{workspace.id}}"},
+        #         "source": "GIT",
+        #     },
+        #     "job_cluster_key": "Job_cluster",
+        # },
+        # {
+        #     "task_key": "03-Image-Search-Gradio-App",
+        #     "depends_on": [{"task_key": "02-Deploy-image-search-Model"}],
+        #     "run_if": "ALL_SUCCESS",
+        #     "notebook_task": {
+        #         "notebook_path": "03-Image-Search-Gradio-App",
+        #         "base_parameters": {"workspace_id": "{{workspace.id}}"},
+        #         "source": "GIT",
+        #     },
+        #     "job_cluster_key": "Job_cluster",
+        # },
     ],
     "git_source": {
         "git_url": "https://github.com/davidradf-db/utilities_industry_maintenance_llm/",
