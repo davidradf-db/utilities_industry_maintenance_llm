@@ -288,7 +288,7 @@ endpoint_config = EndpointCoreConfigInput(
             model_name=model_name,
             model_version=latest_model_version,
             workload_size=ServedModelInputWorkloadSize.SMALL,
-            scale_to_zero_enabled=True,
+            scale_to_zero_enabled=False,
             environment_vars={
                 "DATABRICKS_TOKEN": "{{secrets/dbdemos/rag_sp_token}}",  # <scope>/<secret> that contains an access token
             }

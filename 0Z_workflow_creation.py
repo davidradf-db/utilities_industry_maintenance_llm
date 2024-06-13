@@ -61,6 +61,15 @@ job_config = {
             "job_cluster_key": "Job_cluster",
         },
         {
+            "task_key": "01-Image-Preparation-and-Index",
+            "run_if": "ALL_SUCCESS",
+            "notebook_task": {
+                "notebook_path": "01-Image-Preparation-and-Index",
+                "source": "GIT",
+            },
+            "job_cluster_key": "Job_cluster",
+        },
+        {
             "task_key": "02-Deploy-RAG-Chatbot-Model",
             "depends_on": [{"task_key": "01-Document-Ingestion-and-Index-Creation"}],
             "run_if": "ALL_SUCCESS",
@@ -71,11 +80,32 @@ job_config = {
             "job_cluster_key": "Job_cluster",
         },
         {
-            "task_key": "03-Deploy-RAG-Chatbot",
+            "task_key": "02-Deploy-image-search-Model",
+            "depends_on": [{"task_key": "01-Image-Ingestion-and-Index-Creation"}],
+            "run_if": "ALL_SUCCESS",
+            "notebook_task": {
+                "notebook_path": "02-Deploy-image-search-Model",
+                "source": "GIT",
+            },
+            "job_cluster_key": "Job_cluster",
+        },
+        {
+            "task_key": "03-RAG-Gradio-App",
             "depends_on": [{"task_key": "02-Deploy-RAG-Chatbot-Model"}],
             "run_if": "ALL_SUCCESS",
             "notebook_task": {
                 "notebook_path": "03-RAG-Gradio-App",
+                "base_parameters": {"workspace_id": "{{workspace.id}}"},
+                "source": "GIT",
+            },
+            "job_cluster_key": "Job_cluster",
+        },
+        {
+            "task_key": "03-Image-Search-Gradio-App",
+            "depends_on": [{"task_key": "02-Deploy-image-search-Model"}],
+            "run_if": "ALL_SUCCESS",
+            "notebook_task": {
+                "notebook_path": "03-Image-Search-Gradio-App",
                 "base_parameters": {"workspace_id": "{{workspace.id}}"},
                 "source": "GIT",
             },

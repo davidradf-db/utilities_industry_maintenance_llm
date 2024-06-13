@@ -14,7 +14,7 @@ use_old_langchain = dbutils.widgets.get("use_old_langchain") == "true"
 
 # COMMAND ----------
 
-# MAGIC %pip install mlflow==2.10.1 lxml==4.9.3 transformers==4.30.2 databricks-vectorsearch==0.22
+# MAGIC %pip install mlflow==2.10.2 lxml==4.9.3 transformers==4.30.2 databricks-vectorsearch
 # MAGIC if not use_old_langchain:
 # MAGIC   %pip install langchain==0.1.5 
 # MAGIC dbutils.library.restartPython()
