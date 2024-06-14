@@ -276,6 +276,7 @@ with mlflow.start_run(run_name="dbdemos_chatbot_rag") as run:
 # Create or update serving endpoint
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedModelInput, ServedModelInputWorkloadSize
+from datetime import timedelta
 
 serving_endpoint_name = f"{catalog}_{db}"[:63]
 latest_model_version = get_latest_model_version(model_name)
@@ -302,7 +303,8 @@ existing_endpoint = next(
 serving_endpoint_url = f"{host}/ml/endpoints/{serving_endpoint_name}"
 if existing_endpoint == None:
     print(f"Creating the endpoint {serving_endpoint_url}, this will take a few minutes to package and deploy the endpoint...")
-    w.serving_endpoints.create_and_wait(name=serving_endpoint_name, config=endpoint_config)
+    w.serving_endpoints.create_and_wait(name=serving_endpoint_name, config=endpoint_config,
+                                        timeout=timedelta(minutes=40))
 else:
     print(f"Updating the endpoint {serving_endpoint_url} to version {latest_model_version}, this will take a few minutes to package and deploy the endpoint...")
     # w.serving_endpoints.update_config_and_wait(served_models=endpoint_config.served_models, name=serving_endpoint_name)
