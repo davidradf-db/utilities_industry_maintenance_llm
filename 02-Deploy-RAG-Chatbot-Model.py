@@ -319,17 +319,17 @@ displayHTML(f'Your Model Endpoint Serving is now available. Open the <a href="/m
 # COMMAND ----------
 
 # DBTITLE 1,Let's try to send a query to our chatbot
-from databricks.sdk import WorkspaceClient
-from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedModelInput, ServedModelInputWorkloadSize
+# from databricks.sdk import WorkspaceClient
+# from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedModelInput, ServedModelInputWorkloadSize
 
-# serving_endpoint_name = f"{catalog}_{db}"[:63]
-# latest_model_version = get_latest_model_version(model_name)
+# # serving_endpoint_name = f"{catalog}_{db}"[:63]
+# # latest_model_version = get_latest_model_version(model_name)
 
-w = WorkspaceClient()
-question = "The insulator looks like it has track marks"
+# w = WorkspaceClient()
+# question = "The insulator looks like it has track marks"
 
-answer = w.serving_endpoints.query("dbdemos_rag_chatbot_david_radford_newco", inputs=[{"query": question}])
-print(answer.predictions)
+# answer = w.serving_endpoints.query("dbdemos_rag_chatbot_david_radford_newco", inputs=[{"query": question}])
+# print(answer.predictions)
 
 # COMMAND ----------
 

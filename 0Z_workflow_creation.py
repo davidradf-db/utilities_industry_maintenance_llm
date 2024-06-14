@@ -34,7 +34,7 @@ job_cluster_dict = {
     "job_cluster_key": "Job_cluster",
     "new_cluster": {
         "cluster_name": "",
-        "spark_version": "14.3.x-scala2.12",
+        "spark_version": "14.3.x-cpu-ml-scala2.12",
         "node_type_id": cluster_type,
         "data_security_mode": "SINGLE_USER",
         "runtime_engine": "STANDARD",
