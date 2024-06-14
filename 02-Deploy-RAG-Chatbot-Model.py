@@ -112,7 +112,7 @@ if skip_setup:
 # url used to send the request to your model from the serverless endpoint
 index_name=f"{catalog}.{db}.repair_reports_self_managed_vs_index"
 host = "https://" + spark.conf.get("spark.databricks.workspaceUrl")
-os.environ['DATABRICKS_TOKEN'] = dbutils.secrets.get("dbdemos", "rag_sp_token")
+os.environ['DATABRICKS_TOKEN'] = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
 
 # COMMAND ----------
 
@@ -311,25 +311,14 @@ displayHTML(f'Your Model Endpoint Serving is now available. Open the <a href="/m
 
 # COMMAND ----------
 
+w.current_user.me()
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC Our endpoint is now deployed! You can search endpoint name on the [Serving Endpoint UI](#/mlflow/endpoints) and visualize its performance!
 # MAGIC
 # MAGIC Let's run a REST query to try it in Python. As you can see, we send the `test sentence` doc and it returns an embedding representing our document.
-
-# COMMAND ----------
-
-# DBTITLE 1,Let's try to send a query to our chatbot
-# from databricks.sdk import WorkspaceClient
-# from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedModelInput, ServedModelInputWorkloadSize
-
-# # serving_endpoint_name = f"{catalog}_{db}"[:63]
-# # latest_model_version = get_latest_model_version(model_name)
-
-# w = WorkspaceClient()
-# question = "The insulator looks like it has track marks"
-
-# answer = w.serving_endpoints.query("dbdemos_rag_chatbot_david_radford_newco", inputs=[{"query": question}])
-# print(answer.predictions)
 
 # COMMAND ----------
 

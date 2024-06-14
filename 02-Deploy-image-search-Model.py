@@ -171,38 +171,38 @@ with mlflow.start_run() as run:
 
 # COMMAND ----------
 
-import io
-import base64
-from PIL import Image
-import pandas as pd
-import os
+# import io
+# import base64
+# from PIL import Image
+# import pandas as pd
+# import os
 
-os.environ['DATABRICKS_TOKEN'] = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
+# os.environ['DATABRICKS_TOKEN'] = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
 
-def helper_to_bytes(img):
-    img_bytes = io.BytesIO()
-    img.save(img_bytes, format='PNG')
+# def helper_to_bytes(img):
+#     img_bytes = io.BytesIO()
+#     img.save(img_bytes, format='PNG')
     
-    return img_bytes.getvalue()
+#     return img_bytes.getvalue()
   
-one_image = Image.open('./image_inspections/cropped_insulator.png').resize((30,30))
-_ = base64.b64encode(helper_to_bytes(one_image)).decode('utf-8')
-# print(_)
-df = pd.DataFrame([{"image_bytes":_}])
+# one_image = Image.open('./image_inspections/cropped_insulator.png').resize((30,30))
+# _ = base64.b64encode(helper_to_bytes(one_image)).decode('utf-8')
+# # print(_)
+# df = pd.DataFrame([{"image_bytes":_}])
 
-import mlflow
-logged_model = f'runs:/{run_id}/model'
+# import mlflow
+# logged_model = f'runs:/{run_id}/model'
 
-# Load model as a PyFuncModel.
-loaded_model = mlflow.pyfunc.load_model(logged_model)
+# # Load model as a PyFuncModel.
+# loaded_model = mlflow.pyfunc.load_model(logged_model)
 
 
-# Predict on a Pandas DataFrame.
-import pandas as pd
-loaded_model.predict(df)
+# # Predict on a Pandas DataFrame.
+# import pandas as pd
+# loaded_model.predict(df)
 
-# custom_model.load_context(None)
-# custom_model.predict(None,df)
+# # custom_model.load_context(None)
+# # custom_model.predict(None,df)
 
 # COMMAND ----------
 
@@ -217,13 +217,10 @@ client.set_registered_model_alias(model_name,"Production", int(_register.version
 
 # COMMAND ----------
 
-f"{catalog}_{db}_image_search"
-
-# COMMAND ----------
-
 # Create or update serving endpoint
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedModelInput, ServedModelInputWorkloadSize
+from datetime import timedelta
 
 serving_endpoint_name = f"{catalog}_{db}_image_search"
 latest_model_version = get_latest_model_version(model_name)
@@ -250,9 +247,17 @@ existing_endpoint = next(
 serving_endpoint_url = f"{host}/ml/endpoints/{serving_endpoint_name}"
 if existing_endpoint == None:
     print(f"Creating the endpoint {serving_endpoint_url}, this will take a few minutes to package and deploy the endpoint...")
-    w.serving_endpoints.create_and_wait(name=serving_endpoint_name, config=endpoint_config,timeout=3600)
+    w.serving_endpoints.create_and_wait(name=serving_endpoint_name, config=endpoint_config,timeout=timedelta(minutes=40))
 else:
     print(f"Updating the endpoint {serving_endpoint_url} to version {latest_model_version}, this will take a few minutes to package and deploy the endpoint...")
     # w.serving_endpoints.update_config_and_wait(served_models=endpoint_config.served_models, name=serving_endpoint_name)
     
 displayHTML(f'Your Model Endpoint Serving is now available. Open the <a href="/ml/endpoints/{serving_endpoint_name}">Model Serving Endpoint page</a> for more details.')
+
+# COMMAND ----------
+
+w.current_user.me()
+
+# COMMAND ----------
+
+
