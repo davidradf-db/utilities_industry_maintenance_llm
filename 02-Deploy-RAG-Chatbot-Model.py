@@ -45,8 +45,12 @@ if skip_setup:
 
 # COMMAND ----------
 
+mlflow[databricks]
+
+# COMMAND ----------
+
 # DBTITLE 1,Install the required libraries
-# MAGIC %pip install --ignore-installed mlflow==2.10.1 langchain==0.1.5 databricks-vectorsearch==0.22 databricks-sdk==0.18.0 mlflow[databricks]
+# MAGIC %pip install --ignore-installed mlflow==2.10.1 langchain==0.1.5 databricks-vectorsearch==0.22 databricks-sdk==0.18.0 
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
