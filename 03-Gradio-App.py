@@ -4,11 +4,166 @@
 # MAGIC %pip install typing-extensions==4.8.0 --upgrade
 # MAGIC %pip install -q -U langchain==0.0.319
 # MAGIC %pip install --force-reinstall databricks-genai-inference==0.1.1
+# MAGIC %pip install --ignore-installed mlflow==2.10.2 langchain==0.1.5 databricks-vectorsearch databricks-sdk==0.18.0 mlflow[databricks]
 # MAGIC dbutils.library.restartPython()
 
 # COMMAND ----------
 
 # MAGIC %run ./_resources/00-init $reset_all_data=false $use_old_langchain=true
+
+# COMMAND ----------
+
+import mlflow.pyfunc
+import pandas as pd
+from transformers import CLIPProcessor, CLIPModel, CLIPTokenizer
+import base64
+import os
+
+os.environ['DATABRICKS_TOKEN'] = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
+host = "https://" + spark.conf.get("spark.databricks.workspaceUrl")
+class ImageSearch(mlflow.pyfunc.PythonModel):
+
+
+  def get_model_info(self, model_ID, device):
+    # Save the model to device
+    self.model = CLIPModel.from_pretrained(model_ID).to(device)
+    # Get the processor
+    self.processor = CLIPProcessor.from_pretrained(model_ID)
+    # Get the tokenizer
+    self.tokenizer = CLIPTokenizer.from_pretrained(model_ID)
+    # Return model, processor & tokenizer
+  
+  def get_single_image_embedding(self, my_image,processor, model, device):
+    from transformers import CLIPProcessor, CLIPModel, CLIPTokenizer
+    image = processor(
+        text = None,
+        images = my_image,
+        return_tensors="pt"
+        )["pixel_values"].to(device)
+    embedding = model.get_image_features(image)
+    # convert the embeddings to numpy array
+    return embedding.cpu().detach().numpy()
+
+  def load_context(self, context):
+    import os
+    # import faiss
+    import torch
+    # import skimage
+    import requests
+    import numpy as np
+    import pandas as pd
+    from PIL import Image
+    from io import BytesIO
+    from datasets import load_dataset
+    from collections import OrderedDict
+    from transformers import CLIPProcessor, CLIPModel, CLIPTokenizer
+    from databricks.vector_search.client import VectorSearchClient
+
+    vsc = VectorSearchClient(personal_access_token=os.environ['DATABRICKS_TOKEN'], workspace_url=host)
+    self.index = vsc.get_index(endpoint_name="one-env-shared-endpoint-0", index_name=f"{catalog}.{db}.part_no_lookup")
+      # Set the device
+    self.device = "cuda" if torch.cuda.is_available() else "cpu"
+    # Define the model ID
+    model_ID = "openai/clip-vit-base-patch32"
+    # Get model, processor & tokenizer
+    self.get_model_info(model_ID, self.device)
+  
+  def predict(self, context, model_input):
+    import os
+    # import faiss
+    import torch
+    # import skimage
+    import requests
+    import numpy as np
+    import pandas as pd
+    from PIL import Image
+    from io import BytesIO
+    from datasets import load_dataset
+    from collections import OrderedDict
+    from transformers import CLIPProcessor, CLIPModel, CLIPTokenizer
+    from databricks.vector_search.client import VectorSearchClient
+    _bytes = model_input["image_bytes"].values[0]
+    print(type(_bytes))
+    image_data = base64.b64decode(_bytes)
+    image_bytes = BytesIO(image_data)
+    _img = Image.open(image_bytes)
+    _embedding = self.get_single_image_embedding(_img, self.processor,self.model,self.device)
+    results = self.index.similarity_search(
+      query_vector=_embedding.squeeze(0).tolist(),
+      columns=['part_no','part_name','replacement_part']
+    )['result']['data_array'][0]
+    answer = {"part_no":results[0], "part_name":results[1], "replacement_part":results[2]}
+    
+    # answer = {"part_no":"testPart"}
+    return answer
+
+# Create a custom pyfunc model
+custom_model = ImageSearch()
+custom_model.load_context(None)
+
+
+
+# COMMAND ----------
+
+# Test Databricks Foundation LLM model
+from langchain_community.chat_models import ChatDatabricks
+chat_model = ChatDatabricks(endpoint="databricks-dbrx-instruct", max_tokens = 200)
+print(f"Test chat model: {chat_model.predict('What is Apache Spark')}")
+
+from databricks.vector_search.client import VectorSearchClient
+from langchain_community.vectorstores import DatabricksVectorSearch
+from langchain_community.embeddings import DatabricksEmbeddings
+
+# Test embedding Langchain model
+#NOTE: your question embedding model must match the one used in the chunk in the previous model 
+embedding_model = DatabricksEmbeddings(endpoint="databricks-bge-large-en")
+print(f"Test embeddings: {embedding_model.embed_query('What is Apache Spark?')[:20]}...")
+index_name=f"{catalog}.{db}.repair_reports_self_managed_vs_index"
+def get_retriever(persist_dir: str = None):
+    os.environ["DATABRICKS_HOST"] = host
+    #Get the vector search index
+    vsc = VectorSearchClient(workspace_url=host, personal_access_token=os.environ["DATABRICKS_TOKEN"])
+    vs_index = vsc.get_index(
+        endpoint_name=VECTOR_SEARCH_ENDPOINT_NAME,
+        index_name=index_name
+    )
+
+    # Create the retriever
+    vectorstore = DatabricksVectorSearch(
+        vs_index, text_column="content", embedding=embedding_model
+    )
+    return vectorstore.as_retriever()
+
+
+# test our retriever 
+vectorstore = get_retriever()
+similar_documents = vectorstore.get_relevant_documents("This hanger hook hole looks enlarged")
+# print(f"Relevant documents: {similar_documents[0]}")
+
+
+from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
+from langchain_community.chat_models import ChatDatabricks
+
+TEMPLATE = """You are a helpful aid for electrical lineman to help them identify repairs and how to fix thme.
+Use the following pieces of context to answer the question at the end:
+{context}
+Question: {question}
+Answer:
+"""
+prompt = PromptTemplate(template=TEMPLATE, input_variables=["context", "question"])
+
+chain = RetrievalQA.from_chain_type(
+    llm=chat_model,
+    chain_type="stuff",
+    retriever=get_retriever(),
+    chain_type_kwargs={"prompt": prompt}
+)
+
+# langchain.debug = True #uncomment to see the chain details and the full prompt being sent
+question = {"query": "The insulator looks like it has track marks"}
+answer = chain.run(question)
+print(answer)
 
 # COMMAND ----------
 
@@ -45,15 +200,17 @@ def transform_output(response):
 
 
 # This model serving endpoint is created in `02_mlflow_logging_inference`
-llm = Databricks(host=workspaceUrl, endpoint_name=chatbot_model_serving_endpoint,
-                 transform_input_fn=transform_input, transform_output_fn=transform_output)
+# llm = Databricks(host=workspaceUrl, endpoint_name=chatbot_model_serving_endpoint,
+#                  transform_input_fn=transform_input, transform_output_fn=transform_output)
 
 # COMMAND ----------
 
 def generate_output(img: str):
     
-    output = llm.invoke(img)
-    return output
+    output = custom_model.predict(None, pd.DataFrame([{"image_bytes":img}]))
+
+    # output = llm.invoke(img)
+    return transform_output(output)
 
 # COMMAND ----------
 
@@ -90,7 +247,8 @@ def question_transform_output(response):
 
 
 # This model serving endpoint is created in `02_mlflow_logging_inference`
-question_llm = Databricks(host=workspaceUrl, endpoint_name=maint_chatbot_model_serving_endpoint, transform_input_fn=question_transform_input, transform_output_fn=question_transform_output, model_kwargs={"max_tokens": 300})
+# question_llm = Databricks(host=workspaceUrl, endpoint_name=maint_chatbot_model_serving_endpoint, transform_input_fn=question_transform_input, transform_output_fn=question_transform_output, model_kwargs={"max_tokens": 300})
+question_llm = chain
 
 # COMMAND ----------
 
@@ -101,7 +259,7 @@ def generate_maint_response(message: str,
         top_p: float = 0.95,
         top_k: int = 50):
     
-    output = question_llm.invoke(message)
+    output = question_llm.run(message)
     return output
 
 # COMMAND ----------
@@ -121,7 +279,6 @@ _ = base64.b64encode(helper_to_bytes(one_image)).decode('utf-8')
 result = generate_output(_)
 result
 
-displayHTML(result)
 
 # COMMAND ----------
 
